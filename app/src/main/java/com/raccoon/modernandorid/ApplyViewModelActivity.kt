@@ -50,7 +50,9 @@ class ApplyViewModelActivity : AppCompatActivity() {
         * */
         // 전달할 초기값을 팩토리에 넘김
         // 팩토리를 받아서 싱글톤
-        val factory = MyViewModelFactory(100)
+
+        // 현재 액티비티와 초기값을 팩토리에 전달
+        val factory = MyViewModelFactory(100, this)
 
         /* 또 다른 방법이 있는데 뷰모델프로바이더를 사용하지 않고 */
 //        val myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
@@ -61,6 +63,7 @@ class ApplyViewModelActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             myViewModel.counter += 1
             binding.textView.text = myViewModel.counter.toString()
+            myViewModel.saveState()
         }
     }
 }
