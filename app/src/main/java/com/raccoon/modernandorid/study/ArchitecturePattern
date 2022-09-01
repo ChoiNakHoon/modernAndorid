@@ -1,0 +1,22 @@
+
+Architecture Pattern
+
+1. MVC
+2. MVP
+3. MVVM
+
+Android App Architecture
+activity가 비대해지는걸 막기위함~
+
+UI Layer
+    UI elements
+    State holders
+
+Domain Layer
+
+Data Layer
+    Repositories
+    Data Sources
+
+
+
