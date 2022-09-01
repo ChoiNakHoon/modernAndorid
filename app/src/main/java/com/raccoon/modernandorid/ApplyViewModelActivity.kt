@@ -2,6 +2,7 @@ package com.raccoon.modernandorid
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.raccoon.modernandorid.databinding.ActivityApplyViewModelBinding
@@ -50,7 +51,11 @@ class ApplyViewModelActivity : AppCompatActivity() {
         // 전달할 초기값을 팩토리에 넘김
         // 팩토리를 받아서 싱글톤
         val factory = MyViewModelFactory(100)
-        val myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
+
+        /* 또 다른 방법이 있는데 뷰모델프로바이더를 사용하지 않고 */
+//        val myViewModel = ViewModelProvider(this, factory).get(MyViewModel::class.java)
+        // 이렇게 써도 됨..
+        val myViewModel by viewModels<MyViewModel> { factory }
         binding.textView.text = myViewModel.counter.toString()
 
         binding.button.setOnClickListener {
