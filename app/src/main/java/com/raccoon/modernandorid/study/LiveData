@@ -1,0 +1,27 @@
+
+Live Data
+
+- Observer Pattern의 개념
+    Subject의 상태 변화를 관찰하는 Observer들을 객체와 연결
+    Subject의 상태 변화를 초래하는 Event가 발생하면 객체가 그 Event를 직접 Observer에게 통지
+
+-- 예시로 유튜버(=Subject) 구독자는(=Observer) 이 관계에서 유튜버가 새로운 영상 올리는 시점에 구독자에게 알림가는 형태
+
+Observable vs LiveData
+ - Observable : 콜백 등록
+    - 라이프사이클을 알 수 없어서 콜백이 상시 작동해야 됨
+    - 작동 필요 없어지면 수동으로 직접 제거해야 됨
+
+ - LiveData : lifecycleOwner 전달
+    - lifecycle이 "STARTED" 혹은 "RESUMED"로 활성화 상태일 때만 observer를 수행
+    - 나머지 상태에서는 자동으로 비활성화 됨!
+
+
+ LiveData 이정
+    - UI와 데이터 상태의 일치 보장
+    - 메모리 누수 없음
+    - 중지된 활동으로 인한 비정상 종료 없음
+    - 수명 주기를 더 이상 수동으로 처리하지 않음
+    - 최신 데이터 유지
+    - 적절한 구성 변경
+    - 리소스 공유
