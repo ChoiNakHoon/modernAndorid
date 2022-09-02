@@ -1,27 +1,27 @@
 package com.raccoon.modernandorid.study.code
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.snackbar.Snackbar
 import com.raccoon.modernandorid.R
-import com.raccoon.modernandorid.databinding.ActivityMainBinding
+import com.raccoon.modernandorid.databinding.ActivityHomeBinding
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     // 바인딩변수 -> MainActivity를 reverseBinding => ActivityMaonBinding
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         //액티비티를 제일 높은 부분을 참조해서 가져옴
         setContentView(binding.root)
 
