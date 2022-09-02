@@ -1,11 +1,9 @@
-package com.raccoon.modernandorid
+package com.raccoon.modernandorid.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.raccoon.modernandorid.R
 import com.raccoon.modernandorid.databinding.ActivityMainBinding
-import com.raccoon.modernandorid.ui.view.FavoriteFragment
-import com.raccoon.modernandorid.ui.view.SearchFragment
-import com.raccoon.modernandorid.ui.view.SettingsFragment
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
