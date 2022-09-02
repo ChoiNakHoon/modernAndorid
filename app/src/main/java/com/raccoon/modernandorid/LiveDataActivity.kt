@@ -30,7 +30,12 @@ class LiveDataActivity : AppCompatActivity() {
         }
 
         // LiveData 옵저빙
-        liveViewModel.liveCounter.observe(this) { counter ->
+//        liveViewModel.liveCounter.observe(this) { counter ->
+//            binding.textView2.text = counter.toString()
+//        }
+
+        //Transformations이용
+        liveViewModel.modifiedCounter.observe(this) { counter ->
             binding.textView2.text = counter.toString()
         }
     }

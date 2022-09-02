@@ -25,3 +25,23 @@ Observable vs LiveData
     - 최신 데이터 유지
     - 적절한 구성 변경
     - 리소스 공유
+
+ Transformations로 LiveData 값 변경하기
+
+  - 람다함수를 실행시키고 라이브데이터를 반환합니다.
+  - 그러면 새로운 라이브데이터가 생성 됨
+  - map
+    val userLivedata = ...
+    val userNameLiveData: LiveData<String> = Transformations.map(userLiveData) { user ->
+    user.firstName + user.lastName
+    }
+
+  - switchMap
+    val nameQueryLiveData = ...
+    val nameQueryLiveData: LiveData<User> = Transformation.switchMap(nameQueryLiveData) { name ->
+        myDataSource.getUserWithNameLiveData(name)
+    }
+
+    fun setNameQuery(name: String) {
+        nameQueryLiveData.setValue(name)
+    }
