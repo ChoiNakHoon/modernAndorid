@@ -28,7 +28,6 @@
         <activity
             android:name=".study.code.RepositoryActivity"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".study.code.DataBindingActivity"
