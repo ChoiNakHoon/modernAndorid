@@ -13,7 +13,7 @@ Observable vs LiveData
     - 작동 필요 없어지면 수동으로 직접 제거해야 됨
 
  - LiveData : lifecycleOwner 전달
-    - lifecycle이 "STARTED" 혹은 "RESUMED"로 활성화 상태일 때만 observer를 수행
+    - lifecycle이 "STARTED" 혹은 "RESUMED"로 활성화 상태일 때만 observer를 수행 -> OnStart이후 OnStop까지?
     - 나머지 상태에서는 자동으로 비활성화 됨!
 
 
