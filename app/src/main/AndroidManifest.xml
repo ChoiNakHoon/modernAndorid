@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ModernAndorid"
         tools:targetApi="31">
         <activity
-            android:name=".DataBindingActivity"
+            android:name=".study.code.RepositoryActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,14 +23,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LiveDataActivity"
+            android:name=".study.code.DataBindingActivity"
             android:exported="true">
+
         </activity>
         <activity
-            android:name=".ApplyViewModelActivity"
+            android:name=".study.code.LiveDataActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".study.code.ApplyViewModelActivity"
+            android:exported="true" />
+        <activity
+            android:name=".study.code.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.ModernAndorid.NoActionBar" />

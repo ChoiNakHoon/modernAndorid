@@ -1,4 +1,4 @@
-package com.raccoon.modernandorid
+package com.raccoon.modernandorid.study.code
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

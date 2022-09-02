@@ -1,4 +1,4 @@
-package com.raccoon.modernandorid
+package com.raccoon.modernandorid.study.code
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.raccoon.modernandorid.R
 import com.raccoon.modernandorid.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

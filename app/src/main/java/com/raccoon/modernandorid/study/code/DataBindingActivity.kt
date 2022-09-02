@@ -1,9 +1,10 @@
-package com.raccoon.modernandorid
+package com.raccoon.modernandorid.study.code
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import com.raccoon.modernandorid.R
 import com.raccoon.modernandorid.databinding.ActivityDataBindingBinding as ActivityDataBinding
 
 class DataBindingActivity : AppCompatActivity() {
@@ -19,7 +20,9 @@ class DataBindingActivity : AppCompatActivity() {
 //        setContentView(binding.root)
 
         // databidingUtil를 통해서 setContentView를 실행시킴
-        val binding = DataBindingUtil.setContentView<ActivityDataBinding>(this@DataBindingActivity, R.layout.activity_data_binding)
+        val binding = DataBindingUtil.setContentView<ActivityDataBinding>(this@DataBindingActivity,
+            R.layout.activity_data_binding
+        )
 
 
         // 현재 액티비티에 초기값을 팩토리에 전달

@@ -1,10 +1,8 @@
-package com.raccoon.modernandorid
+package com.raccoon.modernandorid.study.code
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.raccoon.modernandorid.databinding.ActivityApplyViewModelBinding
 
 class ApplyViewModelActivity : AppCompatActivity() {

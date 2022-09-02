@@ -1,4 +1,4 @@
-package com.raccoon.modernandorid
+package com.raccoon.modernandorid.study.code
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.raccoon.modernandorid.R
 import com.raccoon.modernandorid.databinding.FragmentFirstBinding
 
 /**

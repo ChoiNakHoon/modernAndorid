@@ -1,4 +1,4 @@
-package com.raccoon.modernandorid
+package com.raccoon.modernandorid.study.code
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

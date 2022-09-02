@@ -1,0 +1,15 @@
+Repository Pattern의 정의
+
+UI Layer
+
+Damain Layer
+
+Data Layer {
+    - Repositories
+    - Data Sources
+}
+
+// restful API같다고 보면 됨
+// 클라이언트 <-- API --> 서버
+// ViewModel <-- Repository --> Data Sources
+

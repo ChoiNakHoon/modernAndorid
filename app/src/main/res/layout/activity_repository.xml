@@ -7,69 +7,63 @@
 
         <variable
             name="viewmodel"
-            type="com.raccoon.modernandorid.study.code.DataBindingViewModel" />
-
+            type="com.raccoon.modernandorid.study.code.RepositoriViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".study.code.DataBindingActivity">
-
+        tools:context=".study.code.RepositoryActivity">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewmodel.modifiedCounter.toString()}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
             android:text="Increase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <ProgressBar
             android:id="@+id/progressbar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:max="@{100}"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            android:max="100"
+            app:layout_constraintBottom_toTopOf="@id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.3"
-            app:progressScaled="@{viewmodel.liveCounter}" />
+            app:layout_constraintWidth_percent="0.3" />
 
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:checked="@={viewmodel.hasChecked}"
-            android:text="CheckBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button3" />
+            app:layout_constraintTop_toBottomOf="@id/button" />
 
         <TextView
-            android:id="@+id/checkBoxView"
+            android:id="@+id/checkboxTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="@{viewmodel.hasChecked.toString()}"
-            app:layout_constraintTop_toBottomOf="@id/checkbox"
+            android:text="false"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@id/checkbox" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

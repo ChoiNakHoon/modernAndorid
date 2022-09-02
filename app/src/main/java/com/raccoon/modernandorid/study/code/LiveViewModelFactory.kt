@@ -1,4 +1,4 @@
-package com.raccoon.modernandorid
+package com.raccoon.modernandorid.study.code
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
