@@ -2,13 +2,19 @@ package com.raccoon.modernandorid.ui.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.raccoon.modernandorid.R
+import com.raccoon.modernandorid.data.repository.BookSearchRepositoryImpl
 import com.raccoon.modernandorid.databinding.ActivityMainBinding
+import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
+import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModelProviderFactory
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
+    lateinit var bookSearchViewModel: BookSearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             binding.bottomNavigationView.selectedItemId = R.id.fragment_serach
         }
+
+        val bookSearchRepository = BookSearchRepositoryImpl()
+        val factory = BookSearchViewModelProviderFactory(bookSearchRepository, this)
+        bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
+
     }
 
     private fun setupBottomNavigationView() {
