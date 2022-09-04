@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class BookSearchViewModel(
-    private val bookSearchRepository: BookSearchRepository
+    private val bookSearchRepository: BookSearchRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
