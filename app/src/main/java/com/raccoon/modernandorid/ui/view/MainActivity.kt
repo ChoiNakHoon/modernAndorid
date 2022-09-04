@@ -7,8 +7,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.raccoon.modernandorid.R
+import com.raccoon.modernandorid.data.db.BookSearchDatabase
 import com.raccoon.modernandorid.data.repository.BookSearchRepositoryImpl
 import com.raccoon.modernandorid.databinding.ActivityMainBinding
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
@@ -36,8 +38,8 @@ class MainActivity : AppCompatActivity() {
 //        if (savedInstanceState == null) {
 //            binding.bottomNavigationView.selectedItemId = R.id.fragment_serach
 //        }
-
-        val bookSearchRepository = BookSearchRepositoryImpl()
+        val database = BookSearchDatabase.getInstance(this)
+        val bookSearchRepository = BookSearchRepositoryImpl(database)
         val factory = BookSearchViewModelProviderFactory(bookSearchRepository, this)
         bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.fragment_search, R.id.fragment_favorite, R.id.fragment_settings
             )
         )
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
 

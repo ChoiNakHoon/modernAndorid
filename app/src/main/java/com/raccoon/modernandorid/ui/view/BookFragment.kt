@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.raccoon.modernandorid.databinding.FragmentBookBinding
+import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
 
 
 class BookFragment : Fragment() {
@@ -16,7 +18,7 @@ class BookFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args by navArgs<BookFragmentArgs>()
-
+    private lateinit var bookSearchViewModel: BookSearchViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,6 +31,8 @@ class BookFragment : Fragment() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
+
 
         val book = args.book
         binding.webview.apply {
@@ -36,8 +40,15 @@ class BookFragment : Fragment() {
             settings.javaScriptEnabled = true
             loadUrl(book.url)
         }
+
+        binding.fabFavorite.setOnClickListener {
+            bookSearchViewModel.saveBook(book)
+            Snackbar.make(view, "Book has Saved", Snackbar.LENGTH_SHORT).show()
+
+        }
     }
 
+    
     override fun onPause() {
         binding.webview.onPause()
         super.onPause()

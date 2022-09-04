@@ -23,9 +23,9 @@ import com.raccoon.modernandorid.data.repository.BookSearchRepository
 class BookSearchViewModelProviderFactory(
     private val bookSearchRepository: BookSearchRepository,
     owner: SavedStateRegistryOwner,
-    defaultArgs: Bundle? = null
+    defaultArgs: Bundle? = null,
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
-    override fun <T : ViewModel?> create(
+    override fun <T : ViewModel> create(
         key: String,
         modelClass: Class<T>,
         handle: SavedStateHandle
@@ -33,7 +33,6 @@ class BookSearchViewModelProviderFactory(
         if (modelClass.isAssignableFrom(BookSearchViewModel::class.java)) {
             return BookSearchViewModel(bookSearchRepository, handle) as T
         }
-
         throw IllegalArgumentException("ViewModel class not found")
     }
 }

@@ -1,6 +1,7 @@
 package com.raccoon.modernandorid.ui.viewmodel
 
 import androidx.lifecycle.*
+import com.raccoon.modernandorid.data.model.Book
 import com.raccoon.modernandorid.data.model.SearchResponse
 import com.raccoon.modernandorid.data.repository.BookSearchRepository
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +27,18 @@ class BookSearchViewModel(
         }
     }
 
+
+    // Room
+    fun saveBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
+        bookSearchRepository.insertBooks(book)
+    }
+
+    fun deleteBook(book: Book) = viewModelScope.launch(Dispatchers.IO) {
+        bookSearchRepository.deleteBooks(book)
+    }
+
+    val favoriteBook: LiveData<List<Book>> = bookSearchRepository.getFavoriteBook()
+    
     // SavedSate
     var query = String()
         set(value) {
