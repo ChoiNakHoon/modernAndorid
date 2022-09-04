@@ -5,6 +5,9 @@ import com.raccoon.modernandorid.data.model.Book
 import com.raccoon.modernandorid.data.model.SearchResponse
 import com.raccoon.modernandorid.data.repository.BookSearchRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class BookSearchViewModel(
@@ -37,8 +40,11 @@ class BookSearchViewModel(
         bookSearchRepository.deleteBooks(book)
     }
 
-    val favoriteBook: LiveData<List<Book>> = bookSearchRepository.getFavoriteBook()
-    
+//    val favoriteBook: Flow<List<Book>> = bookSearchRepository.getFavoriteBook()
+
+    val favoriteBooks: StateFlow<List<Book>> = bookSearchRepository.getFavoriteBook()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf())
+
     // SavedSate
     var query = String()
         set(value) {

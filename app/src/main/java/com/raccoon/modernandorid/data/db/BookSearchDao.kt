@@ -1,8 +1,8 @@
 package com.raccoon.modernandorid.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.raccoon.modernandorid.data.model.Book
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookSearchDao {
@@ -14,5 +14,5 @@ interface BookSearchDao {
     fun deleteBook(book: Book)
 
     @Query("SELECT * FROM books")
-    fun getFavoriteBooks(): LiveData<List<Book>>
+    fun getFavoriteBooks(): Flow<List<Book>>
 }

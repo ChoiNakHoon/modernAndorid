@@ -45,3 +45,9 @@ Observable vs LiveData
     fun setNameQuery(name: String) {
         nameQueryLiveData.setValue(name)
     }
+
+// Sharedflow로 Livedata 대처하기
+
+    - SharingStarted.Eagerly: collector가 존재하지 않더라도 바로 sharing이 시작되며 중간에 중지되지 않음
+    - SharingStarted.Lazily: collector가 등록된 이후부터 sharing이 시작되며 중간에 중지되지 않음
+    - SharingStarted.Whilesubscribed: collector가 등록되면 바로 sharing을 시작하며 collector가 전부 없어지면 바로 중지됨

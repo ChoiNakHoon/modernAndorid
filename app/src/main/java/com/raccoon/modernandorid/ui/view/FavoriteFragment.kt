@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.raccoon.modernandorid.databinding.FragmentFavoriteBinding
 import com.raccoon.modernandorid.ui.adapter.BookSearchAdapter
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
+import com.raccoon.modernandorid.util.collectLatestStateFlow
 
 class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
@@ -37,7 +38,23 @@ class FavoriteFragment : Fragment() {
 
         setupRecyclerView()
         setupTouchHelper(view)
-        bookSearchViewModel.favoriteBook.observe(viewLifecycleOwner) {
+//        bookSearchViewModel.favoriteBook.observe(viewLifecycleOwner) {
+//            bookSearchAdapter.submitList(it)
+//        }
+
+//        lifecycleScope.launch {
+//            bookSearchViewModel.favoriteBook.collectLatest {
+//                bookSearchAdapter.submitList(it)
+//            }
+//        }
+//        viewLifecycleOwner.lifecycleScope.launch {
+//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                bookSearchViewModel.favoriteBooks.collectLatest {
+//                    bookSearchAdapter.submitList(it)
+//                }
+//            }
+//        }
+        collectLatestStateFlow(bookSearchViewModel.favoriteBooks) {
             bookSearchAdapter.submitList(it)
         }
     }

@@ -1,10 +1,10 @@
 package com.raccoon.modernandorid.data.repository
 
-import androidx.lifecycle.LiveData
 import com.raccoon.modernandorid.data.api.RestrofitInstance.api
 import com.raccoon.modernandorid.data.db.BookSearchDatabase
 import com.raccoon.modernandorid.data.model.Book
 import com.raccoon.modernandorid.data.model.SearchResponse
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 
 class BookSearchRepositoryImpl(
@@ -27,7 +27,7 @@ class BookSearchRepositoryImpl(
         db.bookSearchDao().deleteBook(book)
     }
 
-    override fun getFavoriteBook(): LiveData<List<Book>> {
+    override fun getFavoriteBook(): Flow<List<Book>> {
         return db.bookSearchDao().getFavoriteBooks()
     }
 }
