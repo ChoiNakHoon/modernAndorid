@@ -5,12 +5,15 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.raccoon.modernandorid.databinding.FragmentSearchBinding
+import com.raccoon.modernandorid.ui.adapter.BookSearchLoadStateAdapter
 import com.raccoon.modernandorid.ui.adapter.BookSearchPagingAdapter
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
 import com.raccoon.modernandorid.util.Constants.SEARCH_BOOKS_TIME_DELAY
@@ -42,6 +45,7 @@ class SearchFragment : Fragment() {
 
         setupRecyclerView()
         searchBooks()
+        setupLoadState()
 //
 //        bookSearchViewModel.searchResult.observe(viewLifecycleOwner) { response ->
 //            val books = response.documents
@@ -50,11 +54,6 @@ class SearchFragment : Fragment() {
         collectLatestStateFlow(bookSearchViewModel.searchPagingResult) {
             bookSearchAdapter.submitData(it)
         }
-    }
-
-    override fun onDestroyView() {
-        _binding = null
-        super.onDestroyView()
     }
 
     private fun setupRecyclerView() {
@@ -70,7 +69,10 @@ class SearchFragment : Fragment() {
                     DividerItemDecoration.VERTICAL
                 )
             )
-            adapter = bookSearchAdapter
+//            adapter = bookSearchAdapter
+            adapter = bookSearchAdapter.withLoadStateFooter(
+                footer = BookSearchLoadStateAdapter(bookSearchAdapter::retry)
+            )
         }
 
         bookSearchAdapter.setOnItemClickListener {
@@ -101,5 +103,45 @@ class SearchFragment : Fragment() {
             }
             startTime = endTime
         }
+    }
+
+    private fun setupLoadState() {
+        bookSearchAdapter.addLoadStateListener { combinedLoadStates ->
+            val loadState = combinedLoadStates.source
+
+            // 리스트가 비어있는지 체크
+            val isListEmpty = bookSearchAdapter.itemCount < 1
+                    && loadState.refresh is LoadState.NotLoading
+                    && loadState.append.endOfPaginationReached
+
+            binding.tvEmptylist.isVisible = isListEmpty
+            binding.rvSearchResult.isVisible = !isListEmpty
+
+            // 로딩 중일때 프로그래스바 표시
+            binding.progressBar.isVisible = loadState.refresh is LoadState.Loading
+
+            // 에러처리
+//            binding.btnRetry.isVisible = loadState.refresh is LoadState.Error
+//                    || loadState.append is LoadState.Error
+//                    || loadState.prepend is LoadState.Error
+//            val errorState: LoadState.Error? = loadState.append as? LoadState.Error
+//                ?: loadState.prepend as? LoadState.Error
+//                ?: loadState.refresh as? LoadState.Error
+//
+//            errorState?.let {
+//                Toast.makeText(requireContext(), it.error.message, Toast.LENGTH_SHORT).show()
+//            }
+        }
+
+        // 버튼을 클릭하면 페이지를 갱신
+//        binding.btnRetry.setOnClickListener {
+//            bookSearchAdapter.retry()
+//        }
+
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 }
