@@ -1,6 +1,7 @@
 package com.raccoon.modernandorid.ui.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,7 @@ class SettingsFragment : Fragment() {
         //save,loadSettings를 받는다
         saveSettings()
         loadSettings()
+        showWorkStatus()
     }
 
     private fun saveSettings() {
@@ -45,6 +47,16 @@ class SettingsFragment : Fragment() {
             }
             // Sort값 저장
             bookSearchViewModel.saveSortMode(value)
+        }
+
+        // WorkManager
+        binding.swCacheDelete.setOnCheckedChangeListener { _, isChecked ->
+            bookSearchViewModel.saveCacheDeleteMode(isChecked)
+            if (isChecked) {
+                bookSearchViewModel.setWork()
+            } else {
+                bookSearchViewModel.deleteWork()
+            }
         }
     }
 
@@ -59,6 +71,23 @@ class SettingsFragment : Fragment() {
             binding.rgSort.check(buttonId)
         }
 
+        // WorkManager
+        lifecycleScope.launch {
+            val mode = bookSearchViewModel.getCacheDelteMode()
+            binding.swCacheDelete.isChecked = mode
+        }
+
+    }
+
+    private fun showWorkStatus() {
+        bookSearchViewModel.getWorkStatus().observe(viewLifecycleOwner) { workInfo ->
+            Log.d("WorkManager", workInfo.toString())
+            if (workInfo.isEmpty()) {
+                binding.tvWorkStatus.text = "No works"
+            } else {
+                binding.tvWorkStatus.text = workInfo[0].state.toString()
+            }
+        }
     }
 
     override fun onDestroyView() {

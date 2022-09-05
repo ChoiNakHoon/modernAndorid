@@ -1,10 +1,7 @@
 package com.raccoon.modernandorid.data.repository
 
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -49,6 +46,7 @@ class BookSearchRepositoryImpl(
     // DataStore
     private object PreferencesKeys {
         val SORT_MODE = stringPreferencesKey("sort_mode")
+        val CACHE_DELETE_MODE = booleanPreferencesKey("cache_delete_mode")
     }
 
     // 저장하는 방법은 코루틴 방법으로
@@ -72,6 +70,27 @@ class BookSearchRepositoryImpl(
             }
             .map { prefs ->
                 prefs[SORT_MODE] ?: Sort.ACCURACY.value
+            }
+    }
+
+    override suspend fun saveCacheDeleteMode(mode: Boolean) {
+        dataStore.edit { prefs ->
+            prefs[PreferencesKeys.CACHE_DELETE_MODE] = mode
+        }
+    }
+
+    override suspend fun getCahcheDeleteMode(): Flow<Boolean> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    exception.printStackTrace()
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }
+            .map { prefs ->
+                prefs[PreferencesKeys.CACHE_DELETE_MODE] ?: false
             }
     }
 
