@@ -1,7 +1,9 @@
 package com.raccoon.modernandorid.ui.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -15,6 +17,7 @@ import com.raccoon.modernandorid.data.repository.BookSearchRepositoryImpl
 import com.raccoon.modernandorid.databinding.ActivityMainBinding
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModelProviderFactory
+import com.raccoon.modernandorid.util.Constants.DATASTORE_NAME
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -26,6 +29,9 @@ class MainActivity : AppCompatActivity() {
     // navigation graph 설정
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    //메인액티비티에 의존성 전달
+    private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 //            binding.bottomNavigationView.selectedItemId = R.id.fragment_serach
 //        }
         val database = BookSearchDatabase.getInstance(this)
-        val bookSearchRepository = BookSearchRepositoryImpl(database)
+        val bookSearchRepository = BookSearchRepositoryImpl(database, dataStore)
         val factory = BookSearchViewModelProviderFactory(bookSearchRepository, this)
         bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 

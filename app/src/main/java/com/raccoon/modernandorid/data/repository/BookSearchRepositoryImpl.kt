@@ -1,14 +1,25 @@
 package com.raccoon.modernandorid.data.repository
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.raccoon.modernandorid.data.api.RestrofitInstance.api
 import com.raccoon.modernandorid.data.db.BookSearchDatabase
 import com.raccoon.modernandorid.data.model.Book
 import com.raccoon.modernandorid.data.model.SearchResponse
+import com.raccoon.modernandorid.data.repository.BookSearchRepositoryImpl.PreferencesKeys.SORT_MODE
+import com.raccoon.modernandorid.util.Sort
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import okio.IOException
 import retrofit2.Response
 
 class BookSearchRepositoryImpl(
-    private val db: BookSearchDatabase
+    private val db: BookSearchDatabase,
+    private val dataStore: DataStore<Preferences>
 ) : BookSearchRepository {
     override suspend fun searchBook(
         query: String,
@@ -29,5 +40,34 @@ class BookSearchRepositoryImpl(
 
     override fun getFavoriteBook(): Flow<List<Book>> {
         return db.bookSearchDao().getFavoriteBooks()
+    }
+
+    // DataStore
+    private object PreferencesKeys {
+        val SORT_MODE = stringPreferencesKey("sort_mode")
+    }
+
+    // 저장하는 방법은 코루틴 방법으로
+    override suspend fun saveSortMode(mode: String) {
+        dataStore.edit { prefs ->
+            prefs[SORT_MODE] = mode
+        }
+
+    }
+
+    // 파일을 접근하기위해서 데이터 모드를
+    override suspend fun getSortMode(): Flow<String> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    exception.printStackTrace()
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }
+            .map { prefs ->
+                prefs[SORT_MODE] ?: Sort.ACCURACY.value
+            }
     }
 }

@@ -33,7 +33,6 @@ class BookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
 
-
         val book = args.book
         binding.webview.apply {
             webViewClient = WebViewClient()
@@ -48,7 +47,7 @@ class BookFragment : Fragment() {
         }
     }
 
-    
+
     override fun onPause() {
         binding.webview.onPause()
         super.onPause()
