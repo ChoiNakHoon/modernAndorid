@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.raccoon.modernandorid.databinding.FragmentFavoriteBinding
-import com.raccoon.modernandorid.ui.adapter.BookSearchAdapter
+import com.raccoon.modernandorid.ui.adapter.BookSearchPagingAdapter
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
 import com.raccoon.modernandorid.util.collectLatestStateFlow
 
@@ -21,7 +21,9 @@ class FavoriteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bookSearchViewModel: BookSearchViewModel
-    private lateinit var bookSearchAdapter: BookSearchAdapter
+
+    //    private lateinit var bookSearchAdapter: BookSearchAdapter
+    private lateinit var bookSearchAdapter: BookSearchPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,14 +56,21 @@ class FavoriteFragment : Fragment() {
 //                }
 //            }
 //        }
-        collectLatestStateFlow(bookSearchViewModel.favoriteBooks) {
-            bookSearchAdapter.submitList(it)
+        //paging을 위해 favoriteBooks -> favoritePagingBooks로 변경
+        //submitList => submitData로 변경 페이징 쓸꺼면
+        
+//        collectLatestStateFlow(bookSearchViewModel.favoriteBooks) {
+//            bookSearchAdapter.submitList(it)
+//        }
+        collectLatestStateFlow(bookSearchViewModel.favoritePagingBooks) {
+            bookSearchAdapter.submitData(it)
         }
     }
 
 
     private fun setupRecyclerView() {
-        bookSearchAdapter = BookSearchAdapter()
+//        bookSearchAdapter = BookSearchAdapter()
+        bookSearchAdapter = BookSearchPagingAdapter()
         binding.rvFavoriteBooks.apply {
             setHasFixedSize(true)
             layoutManager =
@@ -97,13 +106,22 @@ class FavoriteFragment : Fragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.bindingAdapterPosition
-                val book = bookSearchAdapter.currentList[position]
-                bookSearchViewModel.deleteBook(book)
-                Snackbar.make(view, "Book has deleted", Snackbar.LENGTH_SHORT).apply {
-                    setAction("Undo") {
-                        bookSearchViewModel.saveBook(book)
-                    }
-                }.show()
+//                val book = bookSearchAdapter.currentList[position]
+//                bookSearchViewModel.deleteBook(book)
+//                Snackbar.make(view, "Book has deleted", Snackbar.LENGTH_SHORT).apply {
+//                    setAction("Undo") {
+//                        bookSearchViewModel.saveBook(book)
+//                    }
+//                }.show()
+                val pageBook = bookSearchAdapter.peek(position)
+                pageBook?.let { book ->
+                    bookSearchViewModel.deleteBook(book)
+                    Snackbar.make(view, "Book has deleted", Snackbar.LENGTH_SHORT).apply {
+                        setAction("Undo") {
+                            bookSearchViewModel.saveBook(book)
+                        }
+                    }.show()
+                }
             }
         }
         ItemTouchHelper(itemTouchHelperCallback).apply {

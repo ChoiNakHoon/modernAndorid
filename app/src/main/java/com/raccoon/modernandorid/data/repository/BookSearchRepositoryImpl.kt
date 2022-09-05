@@ -5,11 +5,15 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.raccoon.modernandorid.data.api.RestrofitInstance.api
 import com.raccoon.modernandorid.data.db.BookSearchDatabase
 import com.raccoon.modernandorid.data.model.Book
 import com.raccoon.modernandorid.data.model.SearchResponse
 import com.raccoon.modernandorid.data.repository.BookSearchRepositoryImpl.PreferencesKeys.SORT_MODE
+import com.raccoon.modernandorid.util.Constants.PAGING_SIZE
 import com.raccoon.modernandorid.util.Sort
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -69,5 +73,18 @@ class BookSearchRepositoryImpl(
             .map { prefs ->
                 prefs[SORT_MODE] ?: Sort.ACCURACY.value
             }
+    }
+
+    override fun getFavoritePagingBooks(): Flow<PagingData<Book>> {
+        val pagingSourceFactory = { db.bookSearchDao().getFavoritePagingBooks() }
+
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGING_SIZE,
+                enablePlaceholders = false, // 전체 데이터를 가져옴
+                maxSize = PAGING_SIZE * 3 // 메모리가 최대한 저장할 수 있는 크기
+            ),
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
     }
 }

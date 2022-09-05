@@ -1,5 +1,6 @@
 package com.raccoon.modernandorid.data.repository
 
+import androidx.paging.PagingData
 import com.raccoon.modernandorid.data.model.Book
 import com.raccoon.modernandorid.data.model.SearchResponse
 import kotlinx.coroutines.flow.Flow
@@ -24,4 +25,7 @@ interface BookSearchRepository {
     // DataStore
     suspend fun saveSortMode(mode: String)
     suspend fun getSortMode(): Flow<String>
+
+    // Paging
+    fun getFavoritePagingBooks(): Flow<PagingData<Book>>
 }

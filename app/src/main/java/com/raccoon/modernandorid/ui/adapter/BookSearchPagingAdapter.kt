@@ -1,0 +1,45 @@
+package com.raccoon.modernandorid.ui.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
+import com.raccoon.modernandorid.data.model.Book
+import com.raccoon.modernandorid.databinding.ItemBookPreviewBinding
+
+class BookSearchPagingAdapter : PagingDataAdapter<Book, BookSerachViewHolder>(BookDiffCallback) {
+
+    override fun onBindViewHolder(holder: BookSerachViewHolder, position: Int) {
+        val pageBook = getItem(position)
+        // getItem이 null일 있기때문에 처리
+        pageBook?.let { book ->
+            holder.bind(book)
+            holder.itemView.setOnClickListener {
+                onItemClickListener?.let { it(book) }
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookSerachViewHolder {
+        return BookSerachViewHolder(
+            ItemBookPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+    }
+
+    private var onItemClickListener: ((Book) -> Unit)? = null
+    fun setOnItemClickListener(listener: (Book) -> Unit) {
+        onItemClickListener = listener
+    }
+
+    companion object {
+        private val BookDiffCallback = object : DiffUtil.ItemCallback<Book>() {
+            override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
+                return oldItem.isbn == newItem.isbn
+            }
+
+            override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+}
