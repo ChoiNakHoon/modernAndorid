@@ -10,16 +10,6 @@ plugins {
 android {
     compileSdk 32
 
-    sourceSets {
-        main {
-            res.srcDirs =
-                    [
-                            'src/main/res/layout/study',
-                            'src/main/res/layout',
-                            'src/main/res/'
-                    ]
-        }
-    }
     defaultConfig {
         applicationId "com.raccoon.modernandorid"
         minSdk 30
