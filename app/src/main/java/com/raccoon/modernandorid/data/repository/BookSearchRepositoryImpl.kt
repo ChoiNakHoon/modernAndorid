@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.*
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.raccoon.modernandorid.data.api.RestrofitInstance.api
+import com.raccoon.modernandorid.data.api.BookSearchApi
 import com.raccoon.modernandorid.data.db.BookSearchDatabase
 import com.raccoon.modernandorid.data.model.Book
 import com.raccoon.modernandorid.data.model.SearchResponse
@@ -17,10 +17,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class BookSearchRepositoryImpl(
+@Singleton
+class BookSearchRepositoryImpl @Inject constructor(
     private val db: BookSearchDatabase,
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
+    private val api: BookSearchApi
 ) : BookSearchRepository {
     override suspend fun searchBook(
         query: String,
@@ -54,7 +58,6 @@ class BookSearchRepositoryImpl(
         dataStore.edit { prefs ->
             prefs[SORT_MODE] = mode
         }
-
     }
 
     // 파일을 접근하기위해서 데이터 모드를
@@ -108,7 +111,7 @@ class BookSearchRepositoryImpl(
     }
 
     override fun searchBooksPaging(query: String, sort: String): Flow<PagingData<Book>> {
-        val pagingSourceFactory = { BookSearchPagingSource(query, sort) }
+        val pagingSourceFactory = { BookSearchPagingSource(api, query, sort) }
 
         return Pager(
             config = PagingConfig(

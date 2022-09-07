@@ -1,4 +1,8 @@
 package com.raccoon.modernandorid
 
-class BookSearchApplication {
+import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
+
+@HiltAndroidApp
+class BookSearchApplication : Application() {
 }

@@ -6,18 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.raccoon.modernandorid.R
 import com.raccoon.modernandorid.databinding.FragmentSettingsBinding
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
 import com.raccoon.modernandorid.util.Sort
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var bookSearchViewModel: BookSearchViewModel
+//    private lateinit var bookSearchViewModel: BookSearchViewModel
 
+    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +34,7 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //메인 액티비티에서 뷰 모델을 전달 받고
-        bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
+//        bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
 
         //save,loadSettings를 받는다
         saveSettings()

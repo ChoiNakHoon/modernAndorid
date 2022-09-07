@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,12 +16,15 @@ import com.raccoon.modernandorid.databinding.FragmentFavoriteBinding
 import com.raccoon.modernandorid.ui.adapter.BookSearchPagingAdapter
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
 import com.raccoon.modernandorid.util.collectLatestStateFlow
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var bookSearchViewModel: BookSearchViewModel
+    //    private lateinit var bookSearchViewModel: BookSearchViewModel
+    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
 
     //    private lateinit var bookSearchAdapter: BookSearchAdapter
     private lateinit var bookSearchAdapter: BookSearchPagingAdapter
@@ -36,7 +40,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
+//        bookSearchViewModel = (activity as MainActivity).bookSearchViewModel
 
         setupRecyclerView()
         setupTouchHelper(view)
@@ -58,7 +62,7 @@ class FavoriteFragment : Fragment() {
 //        }
         //paging을 위해 favoriteBooks -> favoritePagingBooks로 변경
         //submitList => submitData로 변경 페이징 쓸꺼면
-        
+
 //        collectLatestStateFlow(bookSearchViewModel.favoriteBooks) {
 //            bookSearchAdapter.submitList(it)
 //        }

@@ -2,13 +2,14 @@ package com.raccoon.modernandorid.data.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.raccoon.modernandorid.data.api.RestrofitInstance.api
+import com.raccoon.modernandorid.data.api.BookSearchApi
 import com.raccoon.modernandorid.data.model.Book
 import com.raccoon.modernandorid.util.Constants.PAGING_SIZE
 import okio.IOException
 import retrofit2.HttpException
 
 class BookSearchPagingSource(
+    private val api: BookSearchApi,
     private val query: String,
     private val sort: String
 ) : PagingSource<Int, Book>() {

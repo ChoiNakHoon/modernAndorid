@@ -1,25 +1,19 @@
 package com.raccoon.modernandorid.ui.view
 
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.WorkManager
 import com.raccoon.modernandorid.R
-import com.raccoon.modernandorid.data.db.BookSearchDatabase
-import com.raccoon.modernandorid.data.repository.BookSearchRepositoryImpl
 import com.raccoon.modernandorid.databinding.ActivityMainBinding
 import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
-import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModelProviderFactory
-import com.raccoon.modernandorid.util.Constants.DATASTORE_NAME
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -32,8 +26,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     //메인액티비티에 의존성 전달
-    private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
-    private val workManager = WorkManager.getInstance(application)
+//    private val Context.dataStore by preferencesDataStore(DATASTORE_NAME)
+//    private val workManager = WorkManager.getInstance(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +40,10 @@ class MainActivity : AppCompatActivity() {
 //        if (savedInstanceState == null) {
 //            binding.bottomNavigationView.selectedItemId = R.id.fragment_serach
 //        }
-        val database = BookSearchDatabase.getInstance(this)
-        val bookSearchRepository = BookSearchRepositoryImpl(database, dataStore)
-        val factory = BookSearchViewModelProviderFactory(bookSearchRepository, workManager, this)
-        bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
+//        val database = BookSearchDatabase.getInstance(this)
+//        val bookSearchRepository = BookSearchRepositoryImpl(database, dataStore)
+//        val factory = BookSearchViewModelProviderFactory(bookSearchRepository, workManager, this)
+//        bookSearchViewModel = ViewModelProvider(this, factory)[BookSearchViewModel::class.java]
 
     }
 
