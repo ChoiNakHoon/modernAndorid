@@ -10,7 +10,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.raccoon.modernandorid.R
 import com.raccoon.modernandorid.databinding.ActivityMainBinding
-import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    lateinit var bookSearchViewModel: BookSearchViewModel
+//    lateinit var bookSearchViewModel: BookSearchViewModel
 
     // navigation graph 설정
     private lateinit var navController: NavController

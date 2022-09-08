@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.raccoon.modernandorid.R
 import com.raccoon.modernandorid.databinding.FragmentSettingsBinding
-import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
+import com.raccoon.modernandorid.ui.viewmodel.SettingsViewModel
 import com.raccoon.modernandorid.util.Sort
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -21,7 +21,8 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
 //    private lateinit var bookSearchViewModel: BookSearchViewModel
 
-    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
+    private val settingsViewModel by activityViewModels<SettingsViewModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,23 +51,23 @@ class SettingsFragment : Fragment() {
                 else -> return@setOnCheckedChangeListener
             }
             // Sort값 저장
-            bookSearchViewModel.saveSortMode(value)
+            settingsViewModel.saveSortMode(value)
         }
 
         // WorkManager
         binding.swCacheDelete.setOnCheckedChangeListener { _, isChecked ->
-            bookSearchViewModel.saveCacheDeleteMode(isChecked)
+            settingsViewModel.saveCacheDeleteMode(isChecked)
             if (isChecked) {
-                bookSearchViewModel.setWork()
+                settingsViewModel.setWork()
             } else {
-                bookSearchViewModel.deleteWork()
+                settingsViewModel.deleteWork()
             }
         }
     }
 
     private fun loadSettings() {
         lifecycleScope.launch {
-            val buttonId = when (bookSearchViewModel.getSortMode()) {
+            val buttonId = when (settingsViewModel.getSortMode()) {
                 Sort.ACCURACY.value -> R.id.rb_accuracy
                 Sort.LATEST.value -> R.id.rb_latest
                 else -> return@launch
@@ -77,14 +78,14 @@ class SettingsFragment : Fragment() {
 
         // WorkManager
         lifecycleScope.launch {
-            val mode = bookSearchViewModel.getCacheDelteMode()
+            val mode = settingsViewModel.getCacheDelteMode()
             binding.swCacheDelete.isChecked = mode
         }
 
     }
 
     private fun showWorkStatus() {
-        bookSearchViewModel.getWorkStatus().observe(viewLifecycleOwner) { workInfo ->
+        settingsViewModel.getWorkStatus().observe(viewLifecycleOwner) { workInfo ->
             Log.d("WorkManager", workInfo.toString())
             if (workInfo.isEmpty()) {
                 binding.tvWorkStatus.text = "No works"

@@ -82,7 +82,7 @@ class BookSearchRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCahcheDeleteMode(): Flow<Boolean> {
+    override suspend fun getCacheDeleteMode(): Flow<Boolean> {
         return dataStore.data
             .catch { exception ->
                 if (exception is IOException) {

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.raccoon.modernandorid.databinding.FragmentSearchBinding
 import com.raccoon.modernandorid.ui.adapter.BookSearchLoadStateAdapter
 import com.raccoon.modernandorid.ui.adapter.BookSearchPagingAdapter
-import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
+import com.raccoon.modernandorid.ui.viewmodel.SearchViewModel
 import com.raccoon.modernandorid.util.Constants.SEARCH_BOOKS_TIME_DELAY
 import com.raccoon.modernandorid.util.collectLatestStateFlow
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +28,7 @@ class SearchFragment : Fragment() {
 
 
     //    private lateinit var bookSearchViewModel: BookSearchViewModel
-    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
+    private val searchViewModel by activityViewModels<SearchViewModel>()
 
     //    private lateinit var bookSearchAdapter: BookSearchAdapter
     private lateinit var bookSearchAdapter: BookSearchPagingAdapter
@@ -55,7 +55,7 @@ class SearchFragment : Fragment() {
 //            val books = response.documents
 //            bookSearchAdapter.submitList(books)
 //        }
-        collectLatestStateFlow(bookSearchViewModel.searchPagingResult) {
+        collectLatestStateFlow(searchViewModel.searchPagingResult) {
             bookSearchAdapter.submitData(it)
         }
     }
@@ -90,7 +90,7 @@ class SearchFragment : Fragment() {
         var endTime: Long
 
         binding.etSearch.text =
-            Editable.Factory.getInstance().newEditable(bookSearchViewModel.query)
+            Editable.Factory.getInstance().newEditable(searchViewModel.query)
 
         binding.etSearch.addTextChangedListener { text: Editable? ->
             endTime = System.currentTimeMillis()
@@ -100,8 +100,8 @@ class SearchFragment : Fragment() {
                     val query = it.toString().trim()
                     if (query.isNotEmpty()) {
 //                        bookSearchViewModel.searchBooks(query)
-                        bookSearchViewModel.searchBookPaging(query)
-                        bookSearchViewModel.query = query
+                        searchViewModel.searchBookPaging(query)
+                        searchViewModel.query = query
                     }
                 }
             }

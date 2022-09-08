@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.raccoon.modernandorid.databinding.FragmentBookBinding
-import com.raccoon.modernandorid.ui.viewmodel.BookSearchViewModel
+import com.raccoon.modernandorid.ui.viewmodel.BookViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +22,8 @@ class BookFragment : Fragment() {
     private val args by navArgs<BookFragmentArgs>()
 
     //    private lateinit var bookSearchViewModel: BookSearchViewModel
-    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
+//    private val bookSearchViewModel by activityViewModels<BookSearchViewModel>()
+    private val bookViewModel by activityViewModels<BookViewModel>()
 
     override
 
@@ -48,7 +49,7 @@ class BookFragment : Fragment() {
         }
 
         binding.fabFavorite.setOnClickListener {
-            bookSearchViewModel.saveBook(book)
+            bookViewModel.saveBook(book)
             Snackbar.make(view, "Book has Saved", Snackbar.LENGTH_SHORT).show()
 
         }
